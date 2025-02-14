@@ -1,6 +1,11 @@
 pipeline {
     agent any
-
+//This pipeline is used to build a nodejs application
+/*
+    It uses npm ci
+    npm run build
+    np test 
+*/
     stages {
         stage('Build') {
             agent {
