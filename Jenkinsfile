@@ -11,17 +11,17 @@ pipeline {
             }
             steps {
                 sh '''
-                    ls -al
-                    pwd
+                    ls -la
                     node --version
                     npm --version
                     npm ci
                     npm run build
-                    ls -al
-                   '''
+                    ls -la
+                '''
             }
         }
-            stage('Test') {
+
+        stage('Test') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -35,6 +35,12 @@ pipeline {
                     npm test
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            junit 'test-results/junit.xml'
         }
     }
 }
