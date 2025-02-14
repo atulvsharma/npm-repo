@@ -26,9 +26,9 @@ pipeline {
                 '''
             }
         }
-        stage('Run Tests'){
+        stage('Tests'){
             parallel{
-            stage('Test') {
+            stage('Unut Test') {
                     agent {
                         docker {
                             image 'node:18-alpine'
@@ -42,6 +42,12 @@ pipeline {
                             npm test
                         '''
                     }
+                    post {
+                            always {
+                                junit 'jest-results/junit.xml'
+                            }
+                        }
+
                 }
                     stage('E2E') {
                     agent {
@@ -68,18 +74,18 @@ pipeline {
                             npx playwright test --reporter=html
                         '''
                     }
+                    post {
+                        always {
+                            //To get this Goto --> Pipeline Syntax --> Select Publish HTML report --> At the bottom Generate the code
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: 'Playwright Report', useWrapperFileDirectly: true])
+                        }
+                    }
+
                 }
 
-                    }
+            }
         }
  
     }
 
-    post {
-        always {
-            junit 'jest-results/junit.xml'
-            //To get this Goto --> Pipeline Syntax --> Select Publish HTML report --> At the bottom Generate the code
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: 'Playwright Report', useWrapperFileDirectly: true])
-        }
-    }
 }
