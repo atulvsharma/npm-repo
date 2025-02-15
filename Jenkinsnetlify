@@ -84,8 +84,8 @@ pipeline {
                 }
             }
             steps {
+                //Installing netlify cli and node-jq to parse JSON (To read the JSON file)
                 sh '''
-                    //Installing netlify cli and node-jq to parse JSON (To read the JSON file)
                     npm install netlify-cli node-jq
                     node_modules/.bin/netlify --version
                     echo "Deploying to Pre-PROD region, site ID : $NETLIFY_SITE_ID"
