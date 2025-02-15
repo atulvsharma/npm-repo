@@ -88,6 +88,7 @@ pipeline {
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
                     echo "Deploying to PROD region, site ID : $NETLIFY_SITE_ID"
+                    echo "Som changes to trigger job to validate Poll SCM"
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build --prod
                 '''
