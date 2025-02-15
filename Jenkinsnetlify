@@ -96,6 +96,7 @@ pipeline {
 
         stage('Approval for PROD deployment'){
             steps{
+                //By default timeout unit is in MINUTES
                 timeout(time: 1, unit: 'HOURS' ){
                     input message: 'Ready to deploy in PROD?', ok: 'Proceed to PROD'
                 }
