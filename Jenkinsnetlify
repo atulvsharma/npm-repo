@@ -94,7 +94,12 @@ pipeline {
             }
         }
 
-
+        stage('Approval for PROD deployment'){
+            steps{
+                input message: 'Ready to deploy in PROD', ok: 'Proceed to PROD'
+            }
+        }
+        
         stage('Deploy - PROD') {
             agent {
                 docker {
