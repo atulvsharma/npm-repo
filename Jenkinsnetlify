@@ -76,7 +76,26 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy - Pre-PROD') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install netlify-cli
+                    node_modules/.bin/netlify --version
+                    echo "Deploying to Pre-PROD region, site ID : $NETLIFY_SITE_ID"
+                    node_modules/.bin/netlify status
+                    node_modules/.bin/netlify deploy --dir=build
+                '''
+            }
+        }
+
+
+        stage('Deploy - PROD') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -94,6 +113,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Prod - PIV') {
             agent {
                 docker {
