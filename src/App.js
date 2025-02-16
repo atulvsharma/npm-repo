@@ -12,11 +12,11 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          I am on top of it. Working hard to make it. Target is infront. I will acheieve it for sure.
+          Learn Jenkins on Udemy
         </a>
       </header>
       <p>
-          Application version: {process.env.REACT_APP_VERSION}
+          Application version: 1.0.0
       </p>
     </div>
   );
